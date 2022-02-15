@@ -1,0 +1,13 @@
+# senerio 
+# 1. Create custom network called elasticsearch
+docker network create elasticsearch
+
+# 2. Create elasticsearch container with custom name elasticsearch. Use following env variable:"discovery.type=single-node"
+docker run --name elasticsearch --network elasticsearch -p 9200:9200 -e discovery.type=single-node elasticsearch:7.16.3
+
+# 3. Run appropriate/curl container with custom name curl and -it options. Override default command with sh command
+docker run --name curl --network elasticsearch -it appropriate/curl sh
+
+
+
+

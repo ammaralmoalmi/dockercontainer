@@ -1,0 +1,2 @@
+RUN REDIS which expose its service in port 6379
+docker run redis 

@@ -1,0 +1,32 @@
+# create customer network call wordpress
+docker network create wordpress
+
+# create a docker container for mysql
+docker run \
+    --network wordpress \
+    --name mysql \
+    -e MYSQL_ROOT_PASSWORD=password \
+    -e MYSQL_DATABASE=wordpress\
+    -e MYSQL_USER=wordpress\
+    -e MYSQL_PASSWORD=wordpress \
+    -d \
+    mysql:5.7
+
+# create a docker container for phpmyadmin
+docker run \
+    --network wordpress \
+    --name phpmyadmin \
+    -p 8082:80 \
+    --name=myadmin \
+    -d \
+    -e PMA_HOST=mysql \
+    phpmyadmin
+
+# create a wordpress container for wordpress
+docker run \
+    --network wordpress \
+    --name wordpress \
+    -p 8081:80 \
+    -d \
+    -e PMA_HOST=mysql \
+    wordpress:5.4
